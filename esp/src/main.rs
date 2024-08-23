@@ -195,7 +195,7 @@ fn draw_epd(mut buffer: Vec<u8>, mut driver: SpiDev, mut epd: EpdDriver, mut del
     if buffer_len != expected_len {
         anyhow::bail!("buffer len expected {}, got {}", expected_len, buffer_len);
     }
-    let display = VarDisplay::<TriColor>::new(WIDTH, HEIGHT, &mut buffer, false).expect("failed to create display");
+    let display = VarDisplay::<Color>::new(WIDTH, HEIGHT, &mut buffer, false).expect("failed to create display");
 
     epd
         .update_and_display_frame(&mut driver, display.buffer(), &mut delay)

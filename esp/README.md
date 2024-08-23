@@ -45,7 +45,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 rustup toolchain install stable
 cargo install espup
 espup install
-. $HOME/export.esp.sh
+. $HOME/export-esp.sh
 cargo install ldproxy
 cargo install espflash
 sudo usermod -a -G dialout $USER

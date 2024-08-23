@@ -183,7 +183,7 @@ fn create_epd_driver(
 /// Retuns the size of a buffer necessary to hold the entire image
 pub fn get_buffer_size() -> usize {
     // The height is multiplied by 2 because the red pixels essentially exist on a separate "layer"
-    epd_waveshare::buffer_len(WIDTH as usize, HEIGHT as usize * 2)
+    epd_waveshare::buffer_len(WIDTH as usize, HEIGHT as usize)
 }
 
 fn draw_epd(mut buffer: Vec<u8>, mut driver: SpiDev, mut epd: EpdDriver, mut delay: Delay) -> anyhow::Result<()> {

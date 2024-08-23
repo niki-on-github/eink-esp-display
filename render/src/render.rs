@@ -98,30 +98,31 @@ pub fn render(current_time: DateTime<chrono_tz::Tz>, display_data: DisplayData) 
 
         if task_y >= 480.0 {
             break;
+
         }
     }
 
     image::imageops::overlay(&mut image, &fiveday, graph_x, graph_y);
 
 
-    let mut buffer = vec![TriColor::White.get_byte_value(); buffer_len(EPD_WIDTH as usize, 2 * EPD_HEIGHT as usize)];
-    let mut display = VarDisplay::<TriColor>::new(EPD_WIDTH, EPD_HEIGHT, &mut buffer, false).expect("failed to create display");
+    let mut buffer = vec![Color::White.get_byte_value(); buffer_len(EPD_WIDTH as usize, EPD_HEIGHT as usize)];
+    let mut display = VarDisplay::<Color>::new(EPD_WIDTH, EPD_HEIGHT, &mut buffer, false).expect("failed to create display");
 
     for (x, y, p) in image.enumerate_pixels() {
         let x = x as i32;
         let y = y as i32;
         let pt = Point::new(x,y);
         if *p == white {
-            display.set_pixel(Pixel(pt, TriColor::White));
+            display.set_pixel(Pixel(pt, Color::White));
         }
         else if *p == black {
-            display.set_pixel(Pixel(pt, TriColor::Black));
+            display.set_pixel(Pixel(pt, Color::Black));
         }
         else if *p == red {
-            display.set_pixel(Pixel(pt, TriColor::Chromatic));
+            display.set_pixel(Pixel(pt, Color::Black));
         }
         else {
-            display.set_pixel(Pixel(pt, TriColor::White));
+            display.set_pixel(Pixel(pt, Color::White));
         }
     }
 

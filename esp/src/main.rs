@@ -161,7 +161,7 @@ fn create_epd_driver(
     )?;
 
     info!("driver setup completed");
-    let mut delay = Delay {};
+    let mut delay = Delay::new_default();
 
     // Setup EPD
     let epd_driver = Epd7in5::new(
@@ -201,7 +201,7 @@ fn draw_epd(mut buffer: Vec<u8>, mut driver: SpiDev, mut epd: EpdDriver, mut del
         .update_and_display_frame(&mut driver, display.buffer(), &mut delay)
         .expect("display frame");
     info!("called display frame");
-    Delay::delay_ms(20_000u32);
+    delay.delay_ms(20_000u32);
 
     info!("done waiting, putting display to sleep");
     epd.sleep(&mut driver, &mut delay).expect("failed to sleep");

@@ -11,6 +11,7 @@ Sample file:
 ```
 use super::WifiConfig;
 
+// APN must support WPA3
 pub const WIFI_CONFIG_DATA: WifiConfig = WifiConfig {
     ssid: "your_ssid",
     psk: "your_psk",

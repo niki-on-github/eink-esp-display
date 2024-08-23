@@ -17,7 +17,7 @@ use std::time::Duration;
 
 use epd_waveshare::{
     color::*,
-    epd7in5b_v2::{Epd7in5, WIDTH, HEIGHT},
+    epd7in5_v2::{Epd7in5, WIDTH, HEIGHT},
     graphics::VarDisplay,
 };
 use epd_waveshare::prelude::*;

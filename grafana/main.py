@@ -32,16 +32,20 @@ if __name__ == "__main__":
         grayscale_image = image.convert('L')
         
         # NOTE: my display has inverted color black is 255 and white is 0
-        bw_image = grayscale_image.point(lambda x: 0 if x > args.threshold else 255, mode='1').convert('1')
+        bw_image = grayscale_image.point(lambda x: 255 if x > 128 else 0, mode='1')
+        #bw_image = bw_image.convert('1')
         bw_image.save(args.output + ".png")
 
         # Save the raw pixel data without file header, top to bottom
         with open(args.output + ".img", 'wb') as f:
-            row_size = bw_image.width
+            # Calculate row size (must be a multiple of 4 bytes)
+            row_size = ((bw_image.width + 31) // 32) * 4
+            
+            # Write pixel data row by row, top to bottom
             for y in range(bw_image.height):
                 row_data = bytearray(row_size)
                 for x in range(bw_image.width):
-                    if bw_image.getpixel((x, y)) == 0:
+                    if bw_image.getpixel((x, y)) == 0:  # Black pixel
                         byte_index = x // 8
                         bit_index = 7 - (x % 8)
                         row_data[byte_index] |= (1 << bit_index)

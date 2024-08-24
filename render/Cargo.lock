@@ -331,6 +331,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "esp-render"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "chrono-tz",
+ "embedded-graphics",
+ "epd-waveshare",
+ "image",
+ "imageproc",
+ "reqwest",
+ "rusttype",
+ "serde_json",
+]
+
+[[package]]
 name = "exr"
 version = "1.72.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -521,21 +536,6 @@ checksum = "b5eceaaeec696539ddaf7b333340f1af35a5aa87ae3e4f3ead0532f72affab2e"
 dependencies = [
  "cfg-if",
  "crunchy",
-]
-
-[[package]]
-name = "halldisplay"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "chrono-tz",
- "embedded-graphics",
- "epd-waveshare",
- "image",
- "imageproc",
- "reqwest",
- "rusttype",
- "serde_json",
 ]
 
 [[package]]

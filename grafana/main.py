@@ -32,7 +32,7 @@ if __name__ == "__main__":
         grayscale_image = image.convert('L')
         
         # NOTE: my display has inverted color black is 255 and white is 0
-        bw_image = grayscale_image.point(lambda x: 255 if x > 128 else 0, mode='1')
+        bw_image = grayscale_image.point(lambda x: 0 if x > args.threshold else 255, mode='1')
         #bw_image = bw_image.convert('1')
         bw_image.save(args.output + ".png")
 
@@ -45,7 +45,7 @@ if __name__ == "__main__":
             for y in range(bw_image.height):
                 row_data = bytearray(row_size)
                 for x in range(bw_image.width):
-                    if bw_image.getpixel((x, y)) == 0:  # Black pixel
+                    if bw_image.getpixel((x, y)) == 0:
                         byte_index = x // 8
                         bit_index = 7 - (x % 8)
                         row_data[byte_index] |= (1 << bit_index)

@@ -112,17 +112,18 @@ pub fn render(current_time: DateTime<chrono_tz::Tz>, display_data: DisplayData) 
         let x = x as i32;
         let y = y as i32;
         let pt = Point::new(x,y);
+        // invert colors here my display shows inverted colors
         if *p == white {
-            display.set_pixel(Pixel(pt, Color::White));
+            display.set_pixel(Pixel(pt, Color::Black));
         }
         else if *p == black {
-            display.set_pixel(Pixel(pt, Color::Black));
+            display.set_pixel(Pixel(pt, Color::White));
         }
         else if *p == red {
-            display.set_pixel(Pixel(pt, Color::Black));
+            display.set_pixel(Pixel(pt, Color::White));
         }
         else {
-            display.set_pixel(Pixel(pt, Color::White));
+            display.set_pixel(Pixel(pt, Color::Black));
         }
     }
 

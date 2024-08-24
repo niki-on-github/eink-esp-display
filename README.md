@@ -1,4 +1,13 @@
-An e-ink weather/todo display for my hallway, so halldisplay. Server side rendering code lives in `render/` and esp firmware lives in `esp/`. The documentation for the hardware from the manufacturer lives in `waveshare_docs/`.
+# E-Ink Dashboard
+
+An e-ink dashboard.
+
+## Project Structure
+
+- `docs/`: Various docs which are relevant for the project
+- `esp/`: The ESP32 Firmware
+- `weather/`: Server software to show current weather in US.
+- `grafana/`: An grafana to esp bridge to brind any grafana dashboard to the E-Ink display.
 
 ## Misc
 

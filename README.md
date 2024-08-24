@@ -2,4 +2,4 @@ An e-ink weather/todo display for my hallway, so halldisplay. Server side render
 
 ## Misc
 
-# Case https://www.thingiverse.com/thing:6279448/files
+- Case https://www.thingiverse.com/thing:6279448/files

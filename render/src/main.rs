@@ -53,32 +53,11 @@ pub struct DisplayData {
 
 /// Returns (current_weather_json, hourly_weather_json, tasks_json)
 fn gather_data(env_data: &EnvData) -> (String, String, String) {
-    extrasafe::SafetyContext::new()
-        .enable(
-            extrasafe::builtins::SystemIO::nothing()
-                .allow_dns_files()
-                .allow_ssl_files()
-            ).unwrap()
-        // Allow opening tcp sockets for http requests
-        // Allow opening udp socket for DNS unfortunately
-        .enable(
-            extrasafe::builtins::Networking::nothing()
-                .allow_start_tcp_clients()
-                .allow_start_udp_servers().yes_really()
-            ).unwrap()
-        // Enable threading for reqwest blocking mode
-        .enable(
-            extrasafe::builtins::danger_zone::Threads::nothing()
-                .allow_create()
-            ).unwrap()
-        .apply_to_current_thread()
-        .unwrap();
     let client = create_weather_client(&env_data);
     //let daily_forecast = get_daily_forecast(&env_data, &client);
     //println!("{daily_forecast:#?}");
 
-    let todoist_client = create_todoist_client(&env_data);
-    let tasks_json = get_tasks(&todoist_client);
+    let tasks_json = "[]".to_string();
 
     let current_weather_json = get_current_weather(&env_data, &client);
     let hourly_forecast_json = get_hourly_forecast(&env_data, &client);
@@ -86,17 +65,9 @@ fn gather_data(env_data: &EnvData) -> (String, String, String) {
     (current_weather_json, hourly_forecast_json, tasks_json)
 }
 
-fn parse_data(current_weather_json: String, hourly_forecast_json: String, tasks_json: String) -> DisplayData {
+fn parse_data(current_weather_json: String, hourly_forecast_json: String, _tasks_json: String) -> DisplayData {
     // start a new context for parsing the json
-    extrasafe::SafetyContext::new()
-        .enable(
-            extrasafe::builtins::SystemIO::nothing()
-                .allow_stdout()
-                .allow_stderr()
-            ).unwrap()
-        .apply_to_current_thread()
-        .unwrap();
-    let todoist_tasks = parse_tasks(&tasks_json);
+    //let todoist_tasks = parse_tasks(&tasks_json);
     let current_weather = parse_current_weather(&current_weather_json);
     let full_forecast = parse_hourly_forecast(&hourly_forecast_json);
     let forecast = Forecast5Day::new(&full_forecast);
@@ -104,7 +75,7 @@ fn parse_data(current_weather_json: String, hourly_forecast_json: String, tasks_
     DisplayData {
         current_weather,
         forecast,
-        todoist_tasks,
+        todoist_tasks: Vec::new(),
     }
 }
 
@@ -149,17 +120,6 @@ fn main() {
         data_sender.send(get_test_data()).unwrap();
     }
 
-    extrasafe::SafetyContext::new()
-        .enable(
-            extrasafe::builtins::SystemIO::nothing()
-                .allow_stdout()
-                .allow_stderr()
-                .allow_file_write(&output_data_file)
-                .allow_file_write(&output_image_file)
-                .allow_close()
-            ).unwrap()
-        .apply_to_current_thread()
-        .unwrap();
     parse_start.send(()).expect("failed to start json thread");
     display_data = data_receiver.recv()
             .expect("failed to get data");

@@ -28,7 +28,7 @@ mod config;
 
 use request_image::request_image;
 use wifi::WifiConfig;
-use config::{IMAGE_DATA_URL, WIFI_CONFIG_DATA};
+use config::{IMAGE_DATA_URL, WIFI_CONFIG_DATA, REFRESH_INTERVAL_IN_MINUTES};
 
 type SpiDev = SpiDeviceDriver<'static, SpiDriver<'static>>;
 
@@ -77,13 +77,13 @@ fn main() -> anyhow::Result<()> {
     if let Ok(image_data) = image_result {
         log::info!("render image");
         draw_epd(image_data, spi_driver, epd, delay)?;
+        enter_deep_sleep(wakeup_pin.into(), Duration::from_secs(60*REFRESH_INTERVAL_IN_MINUTES));
     }
     else {
         log::error!("getting image data failed: {:?}", image_result.unwrap_err());
+        log::info!("retry in 60 seconds");
+        enter_deep_sleep(wakeup_pin.into(), Duration::from_secs(60));
     }
-
-    // deep sleep for 1.5 hours (or on wakeup button press)
-    enter_deep_sleep(wakeup_pin.into(), Duration::from_secs(60*30*3));
 
     unreachable!("in sleep");
 }

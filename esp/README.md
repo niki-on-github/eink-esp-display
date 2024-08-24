@@ -1,8 +1,8 @@
-This is the firmware code for https://harrystern.net/halldisplay.html
+# ESP Firmware
 
 This directory contains esp-idf/esp-rs based firmware to download an image over wifi and display it on a waveshare e-ink display.
 
-# Building
+## Config
 
 You must create a `src/config.rs` file containing your Wifi connection credentials and the location of the file to download and display.
 
@@ -17,12 +17,11 @@ pub const WIFI_CONFIG_DATA: WifiConfig = WifiConfig {
     psk: "your_psk",
 };
 
-pub const IMAGE_DATA_URL: &str = "https://example.com/data_file.img";
+pub const IMAGE_DATA_URL: &str = "http://esp-dashboard.server.lan/data.img";
+
+pub const REFRESH_INTERVAL_IN_MINUTES: u64 = 1;
 ```
 
-Then you can run `just build` to build assuming you have the rest of your environment set up as in the [embedded rust book](https://docs.rust-embedded.org/book/intro/install.html).
-
-If you have an esp device plugged in over usb, you should be able to use `just run` to upload your code to the device. This is configured in `.cargo/config.toml` in the current directory.
 
 ## Build Setup
 
@@ -51,3 +50,13 @@ cargo install espflash
 sudo usermod -a -G dialout $USER
 reboot
 ```
+
+## Build
+
+```sh
+cargo build
+```
+
+## Run
+
+If you have an esp device plugged in over usb, you should be able to use `cargo run` to upload your code to the device.

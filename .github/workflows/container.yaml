@@ -1,4 +1,4 @@
-name: serien-and-movie-crawler
+name: container
 
 on:
   workflow_dispatch:

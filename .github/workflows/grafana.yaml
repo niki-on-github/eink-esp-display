@@ -1,4 +1,4 @@
-name: container
+name: grafana esp dashboard container
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ on:
     - reopened
 
 env:
-  REGISTRY_IMAGE: ghcr.io/niki-on-github/eink-esp-weather-display
+  REGISTRY_IMAGE: ghcr.io/niki-on-github/grafana-esp-bridge
 
 jobs:
   build:
@@ -75,8 +75,8 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         builder: ${{ steps.buildx.outputs.name }}
-        context: ./render
-        file: ./render/Dockerfile
+        context: ./grafana
+        file: ./grafana/Dockerfile
         platforms: linux/amd64
         push: ${{ steps.prep.outputs.push }}
         tags: ${{ steps.prep.outputs.tags }}

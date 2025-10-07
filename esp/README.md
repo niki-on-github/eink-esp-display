@@ -43,7 +43,7 @@ sudo apt install -y libudev-dev python3-virtualenv python3-pip gcc build-essenti
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 rustup toolchain install stable
 cargo install espup
-espup install
+espup install --toolchain-version 1.84.0.0
 . $HOME/export-esp.sh
 cargo install ldproxy
 cargo install espflash

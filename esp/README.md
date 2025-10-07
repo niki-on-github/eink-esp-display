@@ -60,3 +60,7 @@ cargo build
 ## Run
 
 If you have an esp device plugged in over usb, you should be able to use `cargo run` to upload your code to the device.
+
+## Troubleshoot
+
+If the previewed image has bad quality check the A/B swtitch on the ESP board!
